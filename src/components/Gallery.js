@@ -14,7 +14,9 @@ class Gallery extends Component {
     this.state = {
       photos: this.props.messages.filter(message =>
         message.contentType === 'photo'
-      )
+      ),
+      filter: false,
+      filterBy: '',
     };
 
     this.openZoom = this.openZoom.bind(this);
@@ -70,15 +72,18 @@ class Gallery extends Component {
 
         <div className="galleryContainer">
           {
-            this.state.photos.map((photo, i) => (
-              <GalleryThumbnail
-                key={photo._id}
-                photoIndex={i}
-                photoUrl={photo.url}
-                user={photo.userId}
-                onClick={this.openZoom}
-              />
-                )
+            this.state.photos.map((photo, i) => {
+              console.log('jeuy', photo);
+              return (
+                <GalleryThumbnail
+                  key={photo._id}
+                  photoIndex={i}
+                  photoUrl={photo.url}
+                  user={photo.userId}
+                  onClick={this.openZoom}
+                />
+              );
+            }
             )
           }
         </div>
