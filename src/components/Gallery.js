@@ -15,8 +15,11 @@ class Gallery extends Component {
       photos: this.props.messages.filter(message =>
         message.contentType === 'photo'
       ),
+      filterPhotos: this.props.messages.filter(filterPhoto =>
+        filterPhoto.contentType === 'photo'
+        && filterPhoto.userId === '58a7915029e48da02c0bb221'
+      ),
       filter: false,
-      filterBy: '',
     };
 
     this.openZoom = this.openZoom.bind(this);
@@ -24,6 +27,7 @@ class Gallery extends Component {
     this.closeZoom = this.closeZoom.bind(this);
     this.goLeft = this.goLeft.bind(this);
     this.goRight = this.goRight.bind(this);
+    this.filter = this.filter.bind(this);
   }
 
   componentDidMount() {
@@ -55,6 +59,11 @@ class Gallery extends Component {
     this.props.dispatch(showZoomed(this.state.photos[newIndex].url, newIndex));
   }
 
+  filter() {
+    this.filterTerm.value = '';
+    this.setState({ filter: !this.state.filter });
+  }
+
   render() {
     return (
       <div>
@@ -71,10 +80,11 @@ class Gallery extends Component {
         }
 
         <div className="galleryContainer">
+          <input ref={input => this.filterTerm = input} type="text" />
+          <input onClick={this.filter} type="submit" />
           {
-            this.state.photos.map((photo, i) => {
-              console.log('jeuy', photo);
-              return (
+            this.state.filter ?
+              this.state.filterPhotos.map((photo, i) => (
                 <GalleryThumbnail
                   key={photo._id}
                   photoIndex={i}
@@ -82,8 +92,17 @@ class Gallery extends Component {
                   user={photo.userId}
                   onClick={this.openZoom}
                 />
-              );
-            }
+                )
+              )
+            : this.state.photos.map((photo, i) => (
+              <GalleryThumbnail
+                key={photo._id}
+                photoIndex={i}
+                photoUrl={photo.url}
+                user={photo.userId}
+                onClick={this.openZoom}
+              />
+              )
             )
           }
         </div>

@@ -206,7 +206,7 @@ p.commentSubmit {
 
 input.commentBox {
   height: 100%;
-  width: 70%;
+  width: 64%;
   outline: none;
   border: 1px solid #f5f8f2;
   background-color: #f5f8f2;
@@ -378,7 +378,6 @@ img.imageDropPreview {
 	height: 150px;
 	background-color: #F5F8F2;
 	margin: 2px;
-  padding: 16px;
 }
 
 .galleryContainer img {
